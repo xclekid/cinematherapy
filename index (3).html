@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Киноаптечка для подростка — Итоговый проект</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #111817;
+            --bg-alt: #151E1D;
+            --card: #1A2624;
+            --card-hover: #22322F;
+            --border: #2D403D;
+            --primary: #10B981;
+            --primary-hover: #059669;
+            --primary-text: #062118;
+            --secondary: #6EE7B7;
+            --secondary-bg: rgba(110, 231, 183, 0.14);
+            --text: #F0FDF9;
+            --text-muted: #9CAFA9;
+            --danger: #F87171;
+            --danger-bg: rgba(248, 113, 113, 0.12);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            --modal-bg: rgba(0, 0, 0, 0.78);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.25;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Шапка (стиль вечернего кинозала со стеклянным затемнением, но с надписью Итоговый продукт) */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(17, 24, 23, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: 0.03em;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-pulse {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 12px var(--primary);
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge-product {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 5px 12px;
+            border-radius: 999px;
+        }
+
+        .school-tag {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+        }
+
+        /* Первый экран со светом проектора и рамкой кадра */
+        .hero {
+            padding: 76px 0 64px;
+            background: radial-gradient(ellipse at top, rgba(16, 185, 129, 0.2) 0%, transparent 65%);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .viewfinder {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 40px 28px;
+            text-align: center;
+            position: relative;
+        }
+
+        .viewfinder::before, .viewfinder::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            border-color: var(--primary);
+            border-style: solid;
+            opacity: 0.65;
+        }
+
+        .viewfinder::before {
+            top: 0;
+            left: 0;
+            border-width: 2px 0 0 2px;
+        }
+
+        .viewfinder::after {
+            bottom: 0;
+            right: 0;
+            border-width: 0 2px 2px 0;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--secondary-bg);
+            color: var(--secondary);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 999px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4.4vw, 3.15rem);
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            font-size: 1.08rem;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--primary-text);
+            font-weight: 700;
+            font-size: 0.96rem;
+            padding: 14px 26px;
+            border-radius: 12px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.96rem;
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: var(--card-hover);
+        }
+
+        /* Секции */
+        section {
+            padding: 64px 0;
+        }
+
+        section.alt-bg {
+            background: var(--bg-alt);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 36px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        /* Поиск и фильтры */
+        .controls-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 36px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-size: 0.94rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background: var(--card);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 9px 16px;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: var(--primary-text);
+            border-color: var(--primary);
+        }
+
+        /* Карточки-кинобилеты */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .ticket-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ticket-card:hover {
+            transform: translateY(-4px);
+            background: var(--card-hover);
+            border-color: var(--primary);
+        }
+
+        .ticket-header-strip {
+            background: rgba(0, 0, 0, 0.22);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .ticket-body {
+            padding: 20px 22px 18px;
+        }
+
+        .ticket-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge-cat {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--secondary-bg);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .badges-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Неброский бейдж Marvel */
+        .badge-marvel {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .badge-age {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--text);
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .movie-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .movie-meta {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .movie-desc {
+            font-size: 0.92rem;
+            color: var(--text);
+            opacity: 0.92;
+        }
+
+        /* Отрывной корешок билета */
+        .ticket-stub {
+            border-top: 2px dashed var(--border);
+            padding: 14px 22px;
+            background: rgba(0, 0, 0, 0.16);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .ticket-stub::before, .ticket-stub::after {
+            content: '';
+            position: absolute;
+            top: -9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+        }
+
+        .ticket-stub::before {
+            left: -9px;
+        }
+
+        .ticket-stub::after {
+            right: -9px;
+        }
+
+        .seat-info {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+        }
+
+        .btn-ticket {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ticket:hover {
+            background: var(--primary);
+            color: var(--primary-text);
+        }
+
+        /* Побочные эффекты кино */
+        .risks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .risk-card {
+            background: var(--danger-bg);
+            border: 1px solid rgba(248, 113, 113, 0.35);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .risk-tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--danger);
+            margin-bottom: 10px;
+        }
+
+        .risk-card h3 {
+            font-size: 1.22rem;
+            margin-bottom: 12px;
+        }
+
+        .risk-card p {
+            color: var(--text);
+            opacity: 0.92;
+            font-size: 0.95rem;
+        }
+
+        /* Большое кино против коротких видео */
+        .comp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .comp-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .comp-card h3 {
+            font-size: 1.12rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .comp-row {
+            margin-bottom: 14px;
+        }
+
+        .comp-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .comp-label {
+            display: block;
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .comp-label.short {
+            color: var(--danger);
+        }
+
+        .comp-label.full {
+            color: var(--primary);
+        }
+
+        .comp-row p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* 4 правила */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .rule-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px;
+        }
+
+        .rule-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--primary-text);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        .rule-card h3 {
+            font-size: 1.12rem;
+            margin-bottom: 8px;
+        }
+
+        .rule-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        /* Подвал */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            background: var(--bg-alt);
+        }
+
+        .footer-author {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .footer-meta {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 18px;
+        }
+
+        .to-top {
+            display: inline-block;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--modal-bg);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 200;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--card);
+            border: 1px solid var(--primary);
+            border-radius: 16px;
+            max-width: 560px;
+            width: 100%;
+            padding: 28px;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        .modal-box h3 {
+            font-size: 1.45rem;
+            margin: 10px 0 6px;
+        }
+
+        .modal-lesson {
+            background: var(--secondary-bg);
+            border-left: 3px solid var(--primary);
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 0.92rem;
+        }
+
+        .modal-question {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body id="top">
+
+    <header>
+        <div class="container header-inner">
+            <a href="#top" class="logo">
+                <span class="logo-pulse"></span>
+                Киноаптечка для подростка
+            </a>
+            <div class="header-meta">
+                <span class="badge-product">Итоговый продукт</span>
+                <span class="school-tag">Школа № 645 • 9 «А» класс</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="viewfinder">
+                <span class="hero-tag">Подборка фильмов до 16+</span>
+                <h1>Фильмы, которые помогают разобраться в себе</h1>
+                <p>Надоело часами листать короткие ролики? Выбери, что у тебя сейчас на душе, и возьми билет на фильм, который поддержит, подскажет выход или просто поможет выдохнуть.</p>
+                <div class="hero-actions">
+                    <a href="#catalog" class="btn-primary">Выбрать фильм по состоянию</a>
+                    <button class="btn-secondary" id="random-ticket-btn">Вытянуть случайный билет</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog">
+        <div class="container">
+            <div class="section-header">
+                <h2>Что у тебя сейчас на душе?</h2>
+                <p>Нажми на подходящее состояние — и останутся только те фильмы, которые попадают в него точнее всего (все 28 картин с рейтингом до 16+)</p>
+            </div>
+
+            <div class="controls-wrap">
+                <div class="search-box">
+                    <input type="text" id="search-input" class="search-input" placeholder="Найти фильм по названию или ключевому слову...">
+                </div>
+
+                <div class="filters" id="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Все билеты (28)</button>
+                    <button class="filter-btn" data-filter="confidence">Когда опускаются руки (6)</button>
+                    <button class="filter-btn" data-filter="family">Когда дома не понимают (5)</button>
+                    <button class="filter-btn" data-filter="responsibility">Когда страшно решать самому (6)</button>
+                    <button class="filter-btn" data-filter="friendship">Когда нужно плечо рядом (6)</button>
+                    <button class="filter-btn" data-filter="future">Когда ищешь свой путь (5)</button>
+                </div>
+            </div>
+
+            <div class="movies-grid" id="movies-grid"></div>
+        </div>
+    </section>
+
+    <section class="alt-bg" id="risks">
+        <div class="container">
+            <div class="section-header">
+                <h2>Осторожно: побочные эффекты кино</h2>
+                <p>Кино — это не только творчество, но и индустрия, которая борется за внимание. Важно замечать её уловки и не переносить экранные шаблоны в реальную жизнь.</p>
+            </div>
+
+            <div class="risks-grid">
+                <div class="risk-card">
+                    <span class="risk-tag">Риск № 1</span>
+                    <h3>Романтизация агрессии и нарушения правил</h3>
+                    <p>В фильмах вроде «Форсажа» или «Волка с Уолл-стрит» герои, которые нарушают закон и идут по головам, показаны обаятельными и успешными. Из-за этого легко поверить, что грубость и вседозволенность — лучший способ добиться своего.</p>
+                </div>
+                <div class="risk-card">
+                    <span class="risk-tag">Риск № 2</span>
+                    <h3>Привыкание к экранной жестокости</h3>
+                    <p>Жесткие слэшеры и хорроры («Пила», «Пункт назначения») превращают боль и насилие в аттракцион. Если смотреть такое постоянно, притупляется обычное человеческое сочувствие в жизни.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison">
+        <div class="container">
+            <div class="section-header">
+                <h2>Большое кино против коротких видео</h2>
+                <p>Почему два часа хорошего фильма дают больше, чем два часа в ленте клипов</p>
+            </div>
+
+            <div class="comp-grid">
+                <div class="comp-card">
+                    <h3>1. Внимание и фокус</h3>
+                    <div class="comp-row">
+                        <span class="comp-label short">Короткие видео</span>
+                        <p>Ролик длится 15–60 секунд — мозг привыкает постоянно переключаться и быстро устает.</p>
+                    </div>
+                    <div class="comp-row">
+                        <span class="comp-label full">Полнометражное кино</span>
+                        <p>Полтора-два часа одной истории тренируют усидчивость почти так же, как хорошая книга.</p>
+                    </div>
+                </div>
+
+                <div class="comp-card">
+                    <h3>2. Глубина эмоций</h3>
+                    <div class="comp-row">
+                        <span class="comp-label short">Короткие видео</span>
+                        <p>Резкий смех или удивление, которые забываются через три свайпа.</p>
+                    </div>
+                    <div class="comp-row">
+                        <span class="comp-label full">Полнометражное кино</span>
+                        <p>Успеваешь по-настоящему привязаться к героям, понять их мотивы и прожить историю вместе с ними.</p>
+                    </div>
+                </div>
+
+                <div class="comp-card">
+                    <h3>3. Смысл и развитие</h3>
+                    <div class="comp-row">
+                        <span class="comp-label short">Короткие видео</span>
+                        <p>Вырванный из контекста момент без начала, причин и последствий.</p>
+                    </div>
+                    <div class="comp-row">
+                        <span class="comp-label full">Полнометражное кино</span>
+                        <p>Видно, как герой ошибается, делает выбор и меняется к финалу.</p>
+                    </div>
+                </div>
+
+                <div class="comp-card">
+                    <h3>4. Повод пообщаться</h3>
+                    <div class="comp-row">
+                        <span class="comp-label short">Короткие видео</span>
+                        <p>Каждый сидит в своем телефоне и смотрит свою ленту в одиночку.</p>
+                    </div>
+                    <div class="comp-row">
+                        <span class="comp-label full">Полнометражное кино</span>
+                        <p>Общий вечер с друзьями или семьей, после которого есть что обсудить и поспорить.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="alt-bg" id="rules">
+        <div class="container">
+            <div class="section-header">
+                <h2>4 правила осознанного зрителя</h2>
+                <p>Небольшая шпаргалка, чтобы кино работало на тебя, а не просто сжигало время</p>
+            </div>
+
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <div class="rule-num">1</div>
+                    <h3>Смотри глубже обложки</h3>
+                    <p>Обращай внимание не только на спецэффекты и громкую рекламу, но и на то, о чем вообще эта история.</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">2</div>
+                    <h3>Не путай кино с жизнью</h3>
+                    <p>Даже самый реалистичный фильм снят по сценарию — не все поступки героев работают в реальности.</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">3</div>
+                    <h3>Примеряй выбор на себя</h3>
+                    <p>После титров спроси себя: «А я бы согласился с героем или поступил бы иначе?»</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">4</div>
+                    <h3>Делись впечатлениями</h3>
+                    <p>Обсуди фильм с другом или родителями — в разговоре часто замечаешь детали, которые пропустил.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-author">Автор проекта: Левицкая Полина • ГБОУ школа № 645, 9 «А» класс</div>
+            <div class="footer-meta">Санкт-Петербург, 2026 год • Индивидуальный итоговый проект</div>
+            <a href="#top" class="to-top">↑ Наверх</a>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="movie-modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modal-close" aria-label="Закрыть">&times;</button>
+            <div class="ticket-top">
+                <span class="badge-cat" id="m-cat"></span>
+                <div class="badges-right">
+                    <span class="badge-marvel" id="m-marvel" style="display:none;">Marvel</span>
+                    <span class="badge-age" id="m-age"></span>
+                </div>
+            </div>
+            <h3 id="m-title"></h3>
+            <div class="movie-meta" id="m-meta"></div>
+            <p class="movie-desc" id="m-desc"></p>
+            <div class="modal-lesson">
+                <strong>О чем заставляет задуматься:</strong><br>
+                <span id="m-lesson"></span>
+            </div>
+            <div class="modal-question">
+                <strong>Вопрос себе после просмотра:</strong><br>
+                <span id="m-question"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const movies = [
+            // 1. Когда опускаются руки (6)
+            {
+                num: "001",
+                seat: "ЗАЛ 1 • РЯД 5 • МЕСТО 8",
+                title: "Человек-паук: Через вселенные",
+                year: 2018,
+                country: "США",
+                age: "6+",
+                marvel: true,
+                category: "confidence",
+                categoryName: "Когда опускаются руки",
+                desc: "Обычный бруклинский школьник Майлз Моралес внезапно получает способности Человека-паука, но долго не может поверить, что справится наравне с опытными героями.",
+                lesson: "Никто не чувствует себя готовым на сто процентов — иногда нужно просто рискнуть и сделать шаг.",
+                question: "Какой шаг ты давно откладываешь только потому, что боишься ошибиться?"
+            },
+            {
+                num: "002",
+                seat: "ЗАЛ 2 • РЯД 8 • МЕСТО 4",
+                title: "Шан-Чи и легенда десяти колец",
+                year: 2021,
+                country: "США",
+                age: "16+",
+                marvel: true,
+                category: "confidence",
+                categoryName: "Когда опускаются руки",
+                desc: "Парень, который годами прятался от своего прошлого за самой неприметной работой, вынужден принять свою силу и защитить близких.",
+                lesson: "Пока убегаешь от того, кто ты есть, ты теряешь опору; принятие себя возвращает силы.",
+                question: "Какие свои сильные стороны ты привык занижать на людях?"
+            },
+            {
+                num: "003",
+                seat: "ЗАЛ 1 • РЯД 3 • МЕСТО 11",
+                title: "Кунг-фу Панда",
+                year: 2008,
+                country: "США",
+                age: "0+",
+                marvel: false,
+                category: "confidence",
+                categoryName: "Когда опускаются руки",
+                desc: "Неуклюжий панда По по чистой случайности становится Воином Дракона и доказывает, что секретный ингредиент успеха кроется в нем самом.",
+                lesson: "Не нужно ломать себя под чужие стандарты — сила появляется, когда используешь свои особенности.",
+                question: "Что у тебя получается по-своему, даже если это не похоже на школьные шаблоны?"
+            },
+            {
+                num: "004",
+                seat: "ЗАЛ 3 • РЯД 4 • МЕСТО 6",
+                title: "Чудо",
+                year: 2017,
+                country: "США",
+                age: "12+",
+                marvel: false,
+                category: "confidence",
+                categoryName: "Когда опускаются руки",
+                desc: "Мальчик Август после домашнего обучения впервые идет в обычную школу и учится не прятаться от чужих взглядов, находя настоящих друзей.",
+                lesson: "Искренность и чувство юмора помогают выстоять даже там, где поначалу тебя не принимают.",
+                question: "Как можно поддержать человека в классе, которому сейчас тяжелее всего влиться?"
+            },
+            {
+                num: "005",
+                seat: "ЗАЛ 2 • РЯД 6 • МЕСТО 9",
+                title: "Главный герой",
+                year: 2021,
+                country: "США",
+                age: "16+",
+                marvel: false,
+                category: "confidence",
+                categoryName: "Когда опускаются руки",
+                desc: "Банковский служащий понимает, что он второстепенный персонаж видеоигры, и решает сам изменить свою жизнь вопреки программе.",
+                lesson: "Ты не обязан жить на автопилоте — даже маленький выбор меняет ход событий.",
+                question: "Какую привычку в своем обычном дне ты бы хотел поменять уже сегодня?"
+            },
+            {
+                num: "006",
+                seat: "ЗАЛ 3 • РЯД 7 • МЕСТО 5",
+                title: "Лёд",
+                year: 2018,
+                country: "Россия",
+                age: "12+",
+                marvel: false,
+                category: "confidence",
+                categoryName: "Когда опускаются руки",
+                desc: "Фигуристка Надя после тяжелой травмы теряет веру в возвращение на лед, но упорство и поддержка близкого человека помогают снова встать на коньки.",
+                lesson: "Даже после сильного падения можно вернуться в строй, если не оставаться со своей бедой один на один.",
+                question: "Кто из твоего окружения помогает тебе не сдаваться, когда ничего не клеится?"
+            },
+
+            // 2. Когда дома не понимают (5)
+            {
+                num: "007",
+                seat: "ЗАЛ 1 • РЯД 9 • МЕСТО 7",
+                title: "Чёрная Пантера",
+                year: 2018,
+                country: "США",
+                age: "16+",
+                marvel: true,
+                category: "family",
+                categoryName: "Когда дома не понимают",
+                desc: "Молодой правитель Ваканды Т'Чалла узнает неприятную правду об ошибках прошлого своей семьи и решает выстроить отношения с миром иначе.",
+                lesson: "Уважать старших не значит слепо повторять их ошибки — каждое поколение вправе исправить курс.",
+                question: "В чем твои взгляды на жизнь отличаются от взглядов родителей и как об этом спокойно поговорить?"
+            },
+            {
+                num: "008",
+                seat: "ЗАЛ 2 • РЯД 2 • МЕСТО 10",
+                title: "Я краснею",
+                year: 2022,
+                country: "США",
+                age: "6+",
+                marvel: false,
+                category: "family",
+                categoryName: "Когда дома не понимают",
+                desc: "Тринадцатилетняя Мэйлин старается во всем угодить строгой маме, но при сильных эмоциях превращается в огромную красную панду.",
+                lesson: "Невозможно вечно прятать свои настоящие чувства ради того, чтобы оставаться «удобным» ребенком.",
+                question: "О чем тебе сложнее всего честно рассказать родителям?"
+            },
+            {
+                num: "009",
+                seat: "ЗАЛ 1 • РЯД 4 • МЕСТО 3",
+                title: "Головоломка 2",
+                year: 2024,
+                country: "США",
+                age: "6+",
+                marvel: false,
+                category: "family",
+                categoryName: "Когда дома не понимают",
+                desc: "Райли переходит в старшую школу, и в ее голове появляются Тревожность, Зависть и Смущение, из-за чего она отдаляется от родителей и старых друзей.",
+                lesson: "Взросление приносит сложные эмоции, но ни одна из них не должна полностью заменять тебя настоящего.",
+                question: "Какая эмоция чаще всего берет над тобой верх, когда нужно принять важное решение?"
+            },
+            {
+                num: "010",
+                seat: "ЗАЛ 3 • РЯД 5 • МЕСТО 8",
+                title: "Энканто",
+                year: 2021,
+                country: "США",
+                age: "6+",
+                marvel: false,
+                category: "family",
+                categoryName: "Когда дома не понимают",
+                desc: "В семье Мадригаль у каждого есть волшебный дар, кроме Мирабель — но именно она замечает трещины в доме и спасает семью от разлада.",
+                lesson: "Тебя должны любить не за оценки и таланты, а просто за то, что ты есть.",
+                question: "За что ты ценишь своих родных помимо их обязанностей и достижений?"
+            },
+            {
+                num: "011",
+                seat: "ЗАЛ 2 • РЯД 7 • МЕСТО 12",
+                title: "Тайна Коко",
+                year: 2017,
+                country: "США",
+                age: "12+",
+                marvel: false,
+                category: "family",
+                categoryName: "Когда дома не понимают",
+                desc: "Двенадцатилетний Мигель мечтает о музыке, хотя в его семье она под строгим запретом, и отправляется разгадать старую семейную историю.",
+                lesson: "Честный разговор и попытка понять мотивы близких способны растопить даже многолетние запреты.",
+                question: "Какую историю из жизни бабушек, дедушек или родителей ты хотел бы узнать подробнее?"
+            },
+
+            // 3. Когда страшно решать самому (6)
+            {
+                num: "012",
+                seat: "ЗАЛ 1 • РЯД 6 • МЕСТО 5",
+                title: "Человек-паук: Возвращение домой",
+                year: 2017,
+                country: "США",
+                age: "16+",
+                marvel: true,
+                category: "responsibility",
+                categoryName: "Когда страшно решать самому",
+                desc: "Пятнадцатилетний Питер Паркер хочет доказать, что готов к большим миссиям Мстителей, но после череды промахов учится отвечать за свои действия.",
+                lesson: "Взрослость начинается не с громких подвигов, а с умения не подставлять других ради своей правоты.",
+                question: "В каких повседневных делах ты уже отвечаешь за результат полностью сам?"
+            },
+            {
+                num: "013",
+                seat: "ЗАЛ 1 • РЯД 10 • МЕСТО 9",
+                title: "Человек-паук: Нет пути домой",
+                year: 2021,
+                country: "США",
+                age: "12+",
+                marvel: true,
+                category: "responsibility",
+                categoryName: "Когда страшно решать самому",
+                desc: "Когда тайна личности раскрыта и под угрозой оказываются близкие, Питер Паркер принимает самое тяжелое самостоятельное решение в своей жизни.",
+                lesson: "Иногда правильный выбор требует отказаться от собственного удобства ради тех, кто тебе дорог.",
+                question: "Как ты обычно поступаешь, если твоя ошибка задела другого человека?"
+            },
+            {
+                num: "014",
+                seat: "ЗАЛ 1 • РЯД 12 • МЕСТО 6",
+                title: "Мстители: Финал",
+                year: 2019,
+                country: "США",
+                age: "16+",
+                marvel: true,
+                category: "responsibility",
+                categoryName: "Когда страшно решать самому",
+                desc: "Спустя пять лет после поражения герои снова собираются вместе, чтобы исправить последствия катастрофы, даже зная цену риска.",
+                lesson: "Даже если все пошло не по плану, всегда можно собраться и довести дело до конца.",
+                question: "Что помогает тебе не бросать сложную задачу на полпути?"
+            },
+            {
+                num: "015",
+                seat: "ЗАЛ 2 • РЯД 9 • МЕСТО 2",
+                title: "Железный человек",
+                year: 2008,
+                country: "США",
+                age: "12+",
+                marvel: true,
+                category: "responsibility",
+                categoryName: "Когда страшно решать самому",
+                desc: "Тони Старк видит, во что превращаются его разработки в чужих руках, меняет курс компании и берет ответственность за происходящее на себя.",
+                lesson: "Никогда не поздно признать, что раньше ты ошибался, и направить свои способности в мирное русло.",
+                question: "На какую полезную задачу ты хотел бы направить свои знания в будущем?"
+            },
+            {
+                num: "016",
+                seat: "ЗАЛ 3 • РЯД 8 • МЕСТО 10",
+                title: "Голодные игры",
+                year: 2012,
+                country: "США",
+                age: "16+",
+                marvel: false,
+                category: "responsibility",
+                categoryName: "Когда страшно решать самому",
+                desc: "Китнисс Эвердин добровольно вызывается на смертельный турнир вместо младшей сестры и вынуждена сама принимать решения, от которых зависит жизнь.",
+                lesson: "Готовность защитить близкого человека делает тебя сильнее любых обстоятельств.",
+                question: "Что для тебя значит быть надежным человеком для семьи или друзей?"
+            },
+            {
+                num: "017",
+                seat: "ЗАЛ 2 • РЯД 3 • МЕСТО 7",
+                title: "Король Лев",
+                year: 1994,
+                country: "США",
+                age: "0+",
+                marvel: false,
+                category: "responsibility",
+                categoryName: "Когда страшно решать самому",
+                desc: "Симба долгие годы прячется от прошлого из-за чувства вины, но понимает, что от своей жизни и дома нельзя убегать вечно.",
+                lesson: "Прошлое нельзя переписать, но можно сделать из него выводы и двигаться дальше.",
+                question: "Какой разговор или поступок ты давно откладываешь, хотя знаешь, что пора решиться?"
+            },
+
+            // 4. Когда нужно плечо рядом (6)
+            {
+                num: "018",
+                seat: "ЗАЛ 1 • РЯД 7 • МЕСТО 4",
+                title: "Стражи Галактики",
+                year: 2014,
+                country: "США",
+                age: "12+",
+                marvel: true,
+                category: "friendship",
+                categoryName: "Когда нужно плечо рядом",
+                desc: "Пятеро одиночек со сложными характерами вынуждены объединиться и неожиданно становятся друг для друга настоящей семьей.",
+                lesson: "Настоящие друзья не обязаны быть идеальными — главное, что они не бросят в беде.",
+                question: "За какие поступки ты больше всего ценишь своих друзей?"
+            },
+            {
+                num: "019",
+                seat: "ЗАЛ 2 • РЯД 10 • МЕСТО 8",
+                title: "Мстители",
+                year: 2012,
+                country: "США",
+                age: "12+",
+                marvel: true,
+                category: "friendship",
+                categoryName: "Когда нужно плечо рядом",
+                desc: "Сильные одиночки сначала спорят и тянут одеяло на себя, но учатся действовать как одна команда ради общей цели.",
+                lesson: "Даже самый талантливый человек в одиночку проигрывает команде, где умеют слышать друг друга.",
+                question: "Что помогает тебе находить общий язык с одноклассниками в общей работе?"
+            },
+            {
+                num: "020",
+                seat: "ЗАЛ 1 • РЯД 2 • МЕСТО 6",
+                title: "Гарри Поттер и философский камень",
+                year: 2001,
+                country: "Великобритания, США",
+                age: "12+",
+                marvel: false,
+                category: "friendship",
+                categoryName: "Когда нужно плечо рядом",
+                desc: "Гарри, Рон и Гермиона проходят через первые испытания в школе магии и понимают, что верность друзей важнее страха и оценок.",
+                lesson: "Когда рядом есть те, кто прикроет спину, любой новый этап становится намного проще.",
+                question: "Какой случай показал тебе, что на твоего друга можно положиться?"
+            },
+            {
+                num: "021",
+                seat: "ЗАЛ 3 • РЯД 2 • МЕСТО 9",
+                title: "Лука",
+                year: 2021,
+                country: "США",
+                age: "6+",
+                marvel: false,
+                category: "friendship",
+                categoryName: "Когда нужно плечо рядом",
+                desc: "Двое друзей проводят лето в итальянском городке, скрывая свой секрет и помогая друг другу победить внутренний страх перед миром.",
+                lesson: "Хороший друг помогает заглушить сомнения в голове и поверить, что у тебя получится.",
+                question: "Как ты обычно поддерживаешь друга, когда он переживает перед важным событием?"
+            },
+            {
+                num: "022",
+                seat: "ЗАЛ 3 • РЯД 9 • МЕСТО 3",
+                title: "1+1",
+                year: 2011,
+                country: "Франция",
+                age: "16+",
+                marvel: false,
+                category: "friendship",
+                categoryName: "Когда нужно плечо рядом",
+                desc: "Неожиданная дружба между парализованным аристократом и парнем из пригорода возвращает обоим вкус к жизни.",
+                lesson: "Настоящая поддержка — это не жалость, а умение видеть в человеке равного.",
+                question: "Почему умение посмеяться вместе так сильно сближает людей?"
+            },
+            {
+                num: "023",
+                seat: "ЗАЛ 2 • РЯД 5 • МЕСТО 11",
+                title: "Хорошо быть тихоней",
+                year: 2012,
+                country: "США",
+                age: "16+",
+                marvel: false,
+                category: "friendship",
+                categoryName: "Когда нужно плечо рядом",
+                desc: "Застенчивый первокурсник Чарли находит компанию друзей, которые принимают его таким, какой он есть, и помогают справиться с одиночеством.",
+                lesson: "Свои люди находятся там, где тебе не приходится притворяться кем-то другим.",
+                question: "Что помогает тебе быстрее освоиться в незнакомой компании?"
+            },
+
+            // 5. Когда ищешь свой путь (5)
+            {
+                num: "024",
+                seat: "ЗАЛ 1 • РЯД 8 • МЕСТО 5",
+                title: "Доктор Стрэндж",
+                year: 2016,
+                country: "США",
+                age: "16+",
+                marvel: true,
+                category: "future",
+                categoryName: "Когда ищешь свой путь",
+                desc: "Успешный хирург после аварии теряет возможность оперировать, но открывает для себя совершенно новое дело и способ помогать людям.",
+                lesson: "Если привычный план рухнул — это не тупик, а повод взглянуть на мир шире.",
+                question: "Готов ли ты попробовать новое направление, если старое перестало получаться?"
+            },
+            {
+                num: "025",
+                seat: "ЗАЛ 2 • РЯД 4 • МЕСТО 8",
+                title: "Душа",
+                year: 2020,
+                country: "США",
+                age: "6+",
+                marvel: false,
+                category: "future",
+                categoryName: "Когда ищешь свой путь",
+                desc: "Школьный учитель музыки Джо Гарднер всю жизнь гонится за большой сценой, но понимает, что смысл жизни не сводится к одной мечте.",
+                lesson: "Искра жизни — это умение чувствовать вкус каждого дня, а не только ждать идеального момента.",
+                question: "Какие простые вещи в обычном дне приносят тебе настоящее удовольствие?"
+            },
+            {
+                num: "026",
+                seat: "ЗАЛ 1 • РЯД 11 • МЕСТО 7",
+                title: "Движение вверх",
+                year: 2017,
+                country: "Россия",
+                age: "6+",
+                marvel: false,
+                category: "future",
+                categoryName: "Когда ищешь свой путь",
+                desc: "История подготовки сборной СССР по баскетболу к решающему матчу Олимпиады 1972 года, в победу которой сначала никто не верил.",
+                lesson: "Большая цель складывается из ежедневной работы, дисциплины и доверия тем, кто рядом.",
+                question: "Какую цель ты бы хотел поставить перед собой на ближайший учебный год?"
+            },
+            {
+                num: "027",
+                seat: "ЗАЛ 3 • РЯД 3 • МЕСТО 10",
+                title: "Вперед",
+                year: 2020,
+                country: "США",
+                age: "6+",
+                marvel: false,
+                category: "future",
+                categoryName: "Когда ищешь свой путь",
+                desc: "Два брата-эльфа отправляются в путешествие на поиски магии, чтобы провести еще один день с отцом, но по дороге узнают много нового о себе.",
+                lesson: "Часто в поисках чего-то далекого мы понимаем, что главная опора всегда была рядом.",
+                question: "Кто из близких людей сильнее всего повлиял на твои взгляды?"
+            },
+            {
+                num: "028",
+                seat: "ЗАЛ 2 • РЯД 11 • МЕСТО 4",
+                title: "Интерстеллар",
+                year: 2014,
+                country: "США, Великобритания",
+                age: "16+",
+                marvel: false,
+                category: "future",
+                categoryName: "Когда ищешь свой путь",
+                desc: "Команда исследователей отправляется сквозь червоточину в космос, чтобы найти новый дом для человечества и спасти будущее.",
+                lesson: "Любознательность, наука и привязанность к близким способны преодолеть любые расстояния.",
+                question: "Какая область знаний или профессия будущего кажется тебе самой интересной?"
+            }
+        ];
+
+        const grid = document.getElementById('movies-grid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('search-input');
+        const modal = document.getElementById('movie-modal');
+        const modalClose = document.getElementById('modal-close');
+        const randomBtn = document.getElementById('random-ticket-btn');
+
+        let currentFilter = 'all';
+        let currentQuery = '';
+
+        function renderMovies() {
+            grid.innerHTML = '';
+            const filtered = movies.filter(m => {
+                const matchesCat = currentFilter === 'all' || m.category === currentFilter;
+                const q = currentQuery.toLowerCase().trim();
+                const matchesSearch = !q ||
+                    m.title.toLowerCase().includes(q) ||
+                    m.desc.toLowerCase().includes(q) ||
+                    (m.marvel && (q.includes('marvel') || q.includes('марвел')));
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 30px 0;">По этому запросу ничего не нашлось. Попробуй другое слово или выбери другую вкладку.</p>';
+                return;
+            }
+
+            filtered.forEach((movie) => {
+                const card = document.createElement('article');
+                card.className = 'ticket-card';
+                card.innerHTML = `
+                    <div class="ticket-header-strip">
+                        <span>БИЛЕТ № ${movie.num}</span>
+                        <span>ДО ${movie.age}</span>
+                    </div>
+                    <div class="ticket-body">
+                        <div class="ticket-top">
+                            <span class="badge-cat">${movie.categoryName}</span>
+                            <div class="badges-right">
+                                ${movie.marvel ? '<span class="badge-marvel">Marvel</span>' : ''}
+                                <span class="badge-age">${movie.age}</span>
+                            </div>
+                        </div>
+                        <h3 class="movie-title">${movie.title}</h3>
+                        <div class="movie-meta">${movie.year} • ${movie.country}</div>
+                        <p class="movie-desc">${movie.desc}</p>
+                    </div>
+                    <div class="ticket-stub">
+                        <span class="seat-info">${movie.seat}</span>
+                        <button class="btn-ticket">Подробнее →</button>
+                    </div>
+                `;
+                card.querySelector('.btn-ticket').addEventListener('click', () => openModal(movie));
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(movie) {
+            document.getElementById('m-cat').textContent = movie.categoryName;
+            document.getElementById('m-age').textContent = movie.age;
+            document.getElementById('m-marvel').style.display = movie.marvel ? 'inline-block' : 'none';
+            document.getElementById('m-title').textContent = movie.title;
+            document.getElementById('m-meta').textContent = `${movie.year} • ${movie.country} • Билет № ${movie.num}`;
+            document.getElementById('m-desc').textContent = movie.desc;
+            document.getElementById('m-lesson').textContent = movie.lesson;
+            document.getElementById('m-question').textContent = movie.question;
+            modal.classList.add('open');
+        }
+
+        modalClose.addEventListener('click', () => modal.classList.remove('open'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('open');
+        });
+
+        randomBtn.addEventListener('click', () => {
+            const randomMovie = movies[Math.floor(Math.random() * movies.length)];
+            openModal(randomMovie);
+        });
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderMovies();
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            currentQuery = e.target.value;
+            renderMovies();
+        });
+
+        renderMovies();
+    </script>
+</body>
+</html>
